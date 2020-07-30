@@ -1,23 +1,31 @@
 @startuml
+skinparam defaultTextAlignment center
+skinparam componentStyle uml2
 
+skinparam activity {
+    FontColor          white
+    AttributeFontColor white
+    FontSize           17
+    AttributeFontSize  15
+    AttributeFontname  Droid Sans Mono
+    BackgroundColor    #527BC6
+    BorderColor        black
+    ArrowColor         #222266
+    ArrowFontSize      15
+}
+
+skinparam activityDiamond {
+    FontColor          white
+    AttributeFontColor white
+    FontSize           17
+    BackgroundColor    #527BC6
+    BorderColor        black
+}
 
 :**Example playbook**;
-
-:Example playbook;
-
-
 :Enable firewalld;
-
-
 :Set dmz as default policy;
-
-
 :Allow http/https;
-
-
 :4949 (munin-node) is open to monitor(s);
-
-
 :Bounce firewalld;
-
 @enduml
