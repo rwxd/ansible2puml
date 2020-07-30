@@ -1,14 +1,22 @@
 @startuml
 
+
+:**Example playbook**;
+
 :Example playbook;
+
 
 :Enable firewalld;
 
+
 :Set dmz as default policy;
+
 
 :Allow http/https;
 
+
 :4949 (munin-node) is open to monitor(s);
+
 
 :Bounce firewalld;
 

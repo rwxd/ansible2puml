@@ -15,32 +15,33 @@ def parseAnsibleFile(filePath, destination):
         print(f"Filename: {f.name}")
         # print(f"Parsed: {json.dumps(ansible_file, indent=2)}")
 
-        tasks = []
+    tasks = []
 
-        for item in ansible_file:
-            # if there is a key "tasks" it is a playbook
-            if item["tasks"]:
-                # if name in playbook
-                if "name" in item:
-                    tasks.append({"taskDescription": item["name"]})
+    for item in ansible_file:
+        # if there is a key "tasks" it is a playbook
+        if item["tasks"]:
+            # if name in playbook
+            if "name" in item:
+                tasks.append(
+                    {"taskDescription": item["name"], "bold": True})
 
-                for task in item["tasks"]:
-                    if "name" in task:
-                        tasks.append({"taskDescription": task["name"]})
+            for task in item["tasks"]:
+                if "name" in task:
+                    tasks.append({"taskDescription": task["name"]})
 
-                    # if task is a block
-                    if "block" in task:
-                        for returnedTask in parseBlock(block=task["block"]):
-                            tasks.append(returnedTask)
+                # if task is a block
+                if "block" in task:
+                    for returnedTask in parseBlock(block=task["block"]):
+                        tasks.append(returnedTask)
 
-            # parse tasks file
-            else:
-                for task in item:
-                    if "name" in task:
-                        tasks.append({"taskDescription": task["name"]})
+        # parse tasks file
+        else:
+            for task in item:
+                if "name" in task:
+                    tasks.append({"taskDescription": task["name"]})
 
-        # print(f"Extracted: {json.dumps(tasks, indent=2)}")
-        generatePlantUML(tasks, destination)
+    # print(f"Extracted: {json.dumps(tasks, indent=2)}")
+    generatePlantUML(tasks, destination)
 
 
 def parseBlock(block):
@@ -58,6 +59,9 @@ def generatePlantUML(taskArray, destination):
 
     activityTemplate = """@startuml
 {% for item in taskArray %}
+{% if item.bold %}
+:**{{ item.taskDescription }}**;
+{% endif %}
 :{{ item.taskDescription }};
 {% endfor %}
 @enduml
