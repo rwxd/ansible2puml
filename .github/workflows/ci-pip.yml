@@ -2,9 +2,10 @@ name: Python package
 on: [push]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.images }}
     strategy:
       matrix:
+        images: ["ubuntu-latest", "ubuntu-20.04", "ubuntu-18.04", "ubuntu-16.04", "macos-latest"]
         python-version: [3.6, 3.7, 3.8]
     steps:
     - uses: actions/checkout@v2
