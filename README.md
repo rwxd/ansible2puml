@@ -1,3 +1,4 @@
+![Python package](https://github.com/ProfileID/ansible2puml/workflows/Python%20package/badge.svg)
 # ansible2puml
 Create an PlantUML Activity Diagram from Playbooks or Roles trough Python.
 
