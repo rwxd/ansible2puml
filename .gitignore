@@ -1,0 +1,5 @@
+venv/
+temp*
+local*
+__pycache__/
+.vscode/

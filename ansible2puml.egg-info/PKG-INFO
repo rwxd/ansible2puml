@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: ansible2puml
+Version: 0.1
+Summary: Create an PlantUML Activity Diagram from Playbooks or Roles trough Python.
+Home-page: UNKNOWN
+Author: profileid
+Author-email: profileid@protonmail.com
+License: MIT
+Description: UNKNOWN
+Platform: UNKNOWN
