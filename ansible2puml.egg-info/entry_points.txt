@@ -1,3 +1,0 @@
-[console_scripts]
-ansible2puml = ansible2puml.cli:start
-
