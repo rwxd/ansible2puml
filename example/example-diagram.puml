@@ -1,0 +1,33 @@
+@startuml
+
+:check for samba version;
+
+:check for vulnerable versions;
+
+:update samba from yum if vulnerable;
+
+:check for samba version;
+
+:check that we are no longer vulnerable;
+
+:check for samba3x version;
+
+:check for vulnerable versions;
+
+:update samba3x from yum if vulnerable;
+
+:check for samba3x version;
+
+:check that we are no longer vulnerable;
+
+:check for samba4 version;
+
+:check for vulnerable versions;
+
+:update samba4 from yum if vulnerable;
+
+:check for samba4 version;
+
+:check that we are no longer vulnerable;
+
+@enduml

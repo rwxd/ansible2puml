@@ -12,3 +12,6 @@ pip install git+https://github.com/ProfileID/ansible2puml
 ```
 ansible2puml --source play.yml --destination play.puml 
 ```
+
+## Example
+![Example](./example/example-diagram.png)
