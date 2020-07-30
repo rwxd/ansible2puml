@@ -1,33 +1,15 @@
 @startuml
 
-:check for samba version;
+:Example playbook;
 
-:check for vulnerable versions;
+:Enable firewalld;
 
-:update samba from yum if vulnerable;
+:Set dmz as default policy;
 
-:check for samba version;
+:Allow http/https;
 
-:check that we are no longer vulnerable;
+:4949 (munin-node) is open to monitor(s);
 
-:check for samba3x version;
-
-:check for vulnerable versions;
-
-:update samba3x from yum if vulnerable;
-
-:check for samba3x version;
-
-:check that we are no longer vulnerable;
-
-:check for samba4 version;
-
-:check for vulnerable versions;
-
-:update samba4 from yum if vulnerable;
-
-:check for samba4 version;
-
-:check that we are no longer vulnerable;
+:Bounce firewalld;
 
 @enduml

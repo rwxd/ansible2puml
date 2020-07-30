@@ -1,126 +1,20 @@
-- hosts: all
-  gather_facts: true
-  become_method: sudo
-  become_user: root
-  vars:
-    vulnerable_releases:
-      '5': '3.0.33-3.40.el5_10'
-      '6': '3.6.23-25.el6_7'
-      '7': '4.2.3-12.el7_2'
-    vulnerable_3x:
-      '5': '3.6.23-9.el5_11'
-    vulnerable_4:
-      '6': '4.0.0-68.el6_7.rc4'
+- name: Example playbook
+  hosts: all
 
   tasks:
-    # Base Samba package
-    - name: check for samba version
-      shell: rpm -q --qf "%{VERSION}-%{RELEASE}" samba.{{ ansible_architecture }}
-      register: samba_version
-      ignore_errors: true
+    - name: Enable firewalld
+      service: name=firewalld state=started enabled=yes
 
-    - block:
-      - name: check for vulnerable versions
-        debug:
-          msg: "Samba version {{ samba_version.stdout }} is vulnerable."
-        when: samba_version.stdout|version_compare(vulnerable_releases[ansible_distribution_major_version], '<=')
-        register: is_vuln
-      
-      - name: update samba from yum if vulnerable
-        yum: 
-          name: samba
-          state: latest
-          update_cache: yes
-        when: not is_vuln|skipped
-        notify: restart_samba
-        register: installed
-      
-      - name: check for samba version
-        shell: rpm -q --qf "%{VERSION}-%{RELEASE}" samba.{{ ansible_architecture }}
-        register: samba_new_version
-        when: not is_vuln|skipped
-        
-      - name: check that we are no longer vulnerable
-        debug:
-          msg: "Samba version {{ samba_new_version.stdout }} is still vulnerable!"
-        when: not is_vuln|skipped
-        failed_when: samba_new_version.stdout|version_compare(vulnerable_releases[ansible_distribution_major_version], '<=')
+    - name: Set dmz as default policy
+      command: firewall-cmd --set-default-zone=dmz
 
-      when: samba_version.rc == 0
+    - name: Allow http/https
+      command: firewall-cmd --zone=dmz --permanent --add-service=http --add-service=https
 
-  
-    # Samba 3x package (RHEL 5)
-    - name: check for samba3x version
-      shell: rpm -q --qf "%{VERSION}-%{RELEASE}" samba3x.{{ ansible_architecture }}
-      register: samba3x_version
-      ignore_errors: True
+    - name: 4949 (munin-node) is open to monitor(s)
+      when: install_muninnode|default(True)
+      command: firewall-cmd --permanent --zone=dmz --add-rich-rule='rule family="ipv4" source address="{{ item }}/32" port port=4949 protocol="tcp" accept'
+      with_items: "{{ muninnode_query_ips|default([]) }}"
 
-    - block:
-      - name: check for vulnerable versions
-        debug:
-          msg: "Samba3x version {{ samba3x_version.stdout }} is vulnerable."
-        when: samba3x_version.stdout|version_compare(vulnerable_3x[ansible_distribution_major_version], '<=')
-        register: is_vuln
-      
-      - name: update samba3x from yum if vulnerable
-        yum: 
-          name: samba3x
-          state: latest
-          update_cache: yes
-        when: not is_vuln|skipped
-        notify: restart_samba
-        register: installed
-      
-      - name: check for samba3x version
-        shell: rpm -q --qf "%{VERSION}-%{RELEASE}" samba3x.{{ ansible_architecture }}
-        register: samba3x_new_version
-        when: not is_vuln|skipped
-        
-      - name: check that we are no longer vulnerable
-        debug:
-          msg: "Samba3x version {{ samba3x_new_version.stdout }} is still vulnerable!"
-        when: not is_vuln|skipped
-        failed_when: samba3x_new_version.stdout|version_compare(vulnerable_3x[ansible_distribution_major_version], '<=')
-
-      when: samba3x_version.rc == 0
-  
-    # Samba 4x package (RHEL 6)
-    - name: check for samba4 version
-      shell: rpm -q --qf "%{VERSION}-%{RELEASE}" samba4.{{ ansible_architecture }}
-      register: samba4_version
-      ignore_errors: True
-
-    - block:
-      - name: check for vulnerable versions
-        debug:
-          msg: "Samba4 version {{ samba4_version.stdout }} is vulnerable."
-        when: samba4_version.stdout|version_compare(vulnerable_4[ansible_distribution_major_version], '<=')
-        register: is_vuln
-      
-      - name: update samba4 from yum if vulnerable
-        yum: 
-          name: samba4
-          state: latest
-          update_cache: yes
-        when: not is_vuln|skipped
-        notify: restart_samba
-        register: installed
-      
-      - name: check for samba4 version
-        shell: rpm -q --qf "%{VERSION}-%{RELEASE}" samba4.{{ ansible_architecture }}
-        register: samba4_new_version
-        when: not is_vuln|skipped
-        
-      - name: check that we are no longer vulnerable
-        debug:
-          msg: "Samba4 version {{ samba4_new_version.stdout }} is still vulnerable!"
-        when: not is_vuln|skipped
-        failed_when: samba4_new_version.stdout|version_compare(vulnerable_4[ansible_distribution_major_version], '<=')
-
-      when: samba4_version.rc == 0
-        
-  handlers:
-    - name: restart_samba
-      service:
-        name: "{{ service_name[ansible_os_family] }}"
-        state: restarted
+    - name: Bounce firewalld
+      service: name=firewalld state=restarted
