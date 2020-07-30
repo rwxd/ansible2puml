@@ -1,8 +1,6 @@
 import yaml
 import json
-import click
 from jinja2 import Template
-from zlib import compress
 import plantuml as plantuml
 
 
