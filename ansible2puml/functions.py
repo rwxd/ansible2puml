@@ -1,5 +1,9 @@
-import yaml, json
+import yaml
+import json
+import click
 from jinja2 import Template
+from zlib import compress
+import plantuml as plantuml
 
 
 def parseAnsibleFile(filePath, destination):
@@ -9,7 +13,7 @@ def parseAnsibleFile(filePath, destination):
     with open(filePath, "r") as f:
         ansible_file = yaml.load(f, Loader=yaml.FullLoader)
         print(f"Filename: {f.name}")
-        print(f"Parsed: {json.dumps(ansible_file, indent=2)}")
+        # print(f"Parsed: {json.dumps(ansible_file, indent=2)}")
 
         tasks = []
 
@@ -23,7 +27,7 @@ def parseAnsibleFile(filePath, destination):
                 for task in item["tasks"]:
                     if "name" in task:
                         tasks.append({"taskDescription": task["name"]})
-                        
+
                     # if task is a block
                     if "block" in task:
                         for returnedTask in parseBlock(block=task["block"]):
@@ -35,7 +39,7 @@ def parseAnsibleFile(filePath, destination):
                     if "name" in task:
                         tasks.append({"taskDescription": task["name"]})
 
-        print(f"Extracted: {tasks}")
+        # print(f"Extracted: {json.dumps(tasks, indent=2)}")
         generatePlantUML(tasks, destination)
 
 
@@ -61,7 +65,10 @@ def generatePlantUML(taskArray, destination):
 
     rendered = Template(activityTemplate).render(taskArray=taskArray)
 
+    plantUML = plantuml.PlantUML(url="http://www.plantuml.com/plantuml/png/")
+    url = plantUML.get_url(plantuml_text=rendered)
+
     with open(destination, "w") as f:
         f.write(rendered)
 
-    print(rendered)
+    print(f"PNG: {url}")
