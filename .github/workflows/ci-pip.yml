@@ -28,4 +28,4 @@ jobs:
         # install package
         pip install .
         # test blocks
-        ansible2puml --source tests/blocks.yml --destination tests/blocks.png
+        python tests/test.py
