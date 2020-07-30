@@ -1,5 +1,5 @@
 venv/
-temp*
+*temp.*
 local*
 __pycache__/
 .vscode/

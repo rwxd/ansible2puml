@@ -13,6 +13,6 @@ setup(name='ansible2puml',
       packages=['ansible2puml'],
       install_requires=required,
       entry_points={
-          "console_scripts": ["ansible2puml = ansible2puml.cli:start"]
+          "console_scripts": ["ansible2puml = ansible2puml.cli:main"]
       }
       )
