@@ -4,7 +4,7 @@ Create an PlantUML Activity Diagram from Playbooks or Roles trough Python.
 ## Install package
 Local installation trough pip.
 ```bash
-pip3 install .
+pip install git+https://github.com/ProfileID/ansible2puml
 ```
 
 ## How to
