@@ -25,4 +25,5 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test package
       run: |
+        pip install .
         ansible2puml --source test/blocks.yml --destination tests/blocks.png
