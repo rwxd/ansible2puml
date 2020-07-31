@@ -1,7 +1,7 @@
 # ansible2puml
 
 ![Python package](https://github.com/ProfileID/ansible2puml/workflows/Python%20package/badge.svg)
-![PyPI Package](https://img.shields.io/pypi/v/ansible2puml)(https://pypi.org/project/ansible2puml/)
+[![PyPI Package](https://img.shields.io/pypi/v/ansible2puml)](https://pypi.org/project/ansible2puml/)
 
 ## About ansible2puml
 Create an PlantUML activity diagram from playbooks (in future also roles) trough python.
