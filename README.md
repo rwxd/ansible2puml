@@ -29,4 +29,5 @@ ansible2puml --source play.yml --destination play.puml
 ```
 
 ## Example
-![Example](./example/example-diagram.png)
+[![Example](./example/example-diagram.png)](./example/example-playbook.yml)  
+**Source: [example-playbook.yml](./example/example-playbook.yml)**
