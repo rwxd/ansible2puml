@@ -17,7 +17,7 @@ Install via pypi
 pip install ansible2puml
 ```
 
-Installation via git
+Install via git
 ```bash
 pip install git+https://github.com/ProfileID/ansible2puml
 ```
