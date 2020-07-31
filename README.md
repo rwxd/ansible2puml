@@ -1,6 +1,6 @@
 # ansible2puml
 
-[![Python package](https://github.com/ProfileID/ansible2puml/workflows/CI/badge.svg)](https://github.com/ProfileID/ansible2puml/actions?query=workflow%3A%22CI%22)
+[![CI](https://github.com/ProfileID/ansible2puml/workflows/CI/badge.svg)](https://github.com/ProfileID/ansible2puml/actions?query=workflow%3ACI)
 [![PyPI package](https://img.shields.io/pypi/v/ansible2puml)](https://pypi.python.org/pypi/ansible2puml/)
 [![PyPI download month](https://img.shields.io/pypi/dm/ansible2puml.svg)](https://pypi.python.org/pypi/ansible2puml/)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/ansible2puml.svg)](https://pypi.python.org/pypi/ansible2puml/)
