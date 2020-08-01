@@ -1,4 +1,5 @@
-- hosts: all
+- name: Test Playbook
+  hosts: all
   gather_facts: true
   become_method: sudo
   become_user: root

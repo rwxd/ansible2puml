@@ -4,7 +4,7 @@ from jinja2 import Template
 import plantuml as plantuml
 
 
-def parseAnsibleFile(filePath, destination):
+def parseAnsibleFile(filePath):
     """
     Parse Ansible yaml file
     """
@@ -20,12 +20,17 @@ def parseAnsibleFile(filePath, destination):
         if item["tasks"]:
             # if name in playbook
             if "name" in item:
-                tasks.append(
-                    {"taskDescription": item["name"], "bold": True})
+                item["bold"] = True
+                tasks.append(item)
+            
+            # if roles defined
+            if "roles" in item:
+                for role in item["roles"]:
+                    tasks.append({"name": f"Include role: {role}"})
 
             for task in item["tasks"]:
                 if "name" in task:
-                    tasks.append({"taskDescription": task["name"]})
+                    tasks.append(task)
 
                 # if task is a block
                 if "block" in task:
@@ -36,26 +41,32 @@ def parseAnsibleFile(filePath, destination):
         else:
             for task in item:
                 if "name" in task:
-                    tasks.append({"taskDescription": task["name"]})
+                    tasks.append(task)
 
-    # print(f"Extracted: {json.dumps(tasks, indent=2)}")
-    generatePlantUML(tasks, destination)
+    return tasks
+
+
+def parseWhen(task):
+    returnDict = {}
+    if task["when"]:
+        returnDict["when": task["when"]]
 
 
 def parseBlock(block):
     array = []
     for item in block:
         if "name" in item:
-            array.append({"taskDescription": item["name"]})
+            array.append(item)
     return array
 
 
-def generatePlantUML(taskArray, destination):
+def generatePlantUML(taskArray, destinationPath):
     """
     Generate a PlantUML File from a tasks array.
     """
 
-    activityTemplate = """@startuml
+    activityTemplate = """
+@startuml
 skinparam defaultTextAlignment center
 skinparam componentStyle uml2
 
@@ -81,9 +92,13 @@ skinparam activityDiamond {
 
 {% for item in taskArray -%}
 {% if item.bold -%}
-:**{{ item.taskDescription }}**;
+:**{{ item.name }}**;
+{% elif item.when %}
+if ({{ item.when }}) then (True)
+    :{{ item.name }};
+endif
 {% else -%}
-:{{ item.taskDescription }};
+:{{ item.name }};
 {% endif -%}
 {% endfor -%}
 @enduml
@@ -94,7 +109,7 @@ skinparam activityDiamond {
     plantUML = plantuml.PlantUML(url="http://www.plantuml.com/plantuml/png/")
     url = plantUML.get_url(plantuml_text=rendered)
 
-    with open(destination, "w") as f:
+    with open(destinationPath, "w") as f:
         f.write(rendered)
 
     print(f"PNG: {url}")

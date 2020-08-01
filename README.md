@@ -6,7 +6,7 @@
 [![PyPI license](https://img.shields.io/pypi/l/ansible2puml.svg)](https://pypi.python.org/pypi/ansible2puml/)
 
 ## About ansible2puml
-Create an PlantUML activity diagram from playbooks (in future also roles) trough python.
+Create an PlantUML activity diagram from playbooks and roles trough python.
 
 A .puml file with the PlantUML syntax is generated and a link to display the diagram as PNG is generated.
 
