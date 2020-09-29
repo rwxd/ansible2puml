@@ -105,11 +105,12 @@ class ansible2puml(object):
         # if "name" not in block:
         #     returnDict["name"] = "undefined block name"
 
-        array = []
-        for item in block:
-            if "name" in item:
-                array.append(item)
-        return array
+        # array = []
+        # for item in block:
+        #     if "name" in item:
+        #         array.append(item)
+        # return array
+        return ":Block;"
 
     def generate_plantuml(self, activities):
         """
