@@ -1,6 +1,6 @@
 ---
 - hosts: localhost
-  #roles:
+  # roles:
   #  - azure.azure_preview_modules
   vars:
     resource_group: "{{ resource_group_name }}"

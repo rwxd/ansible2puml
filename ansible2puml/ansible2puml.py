@@ -46,7 +46,7 @@ class ansible2puml(object):
                         if "name" in role:
                             activitys.append(self.parse_task(role))
                         else:
-                            role["name"] = f"Include role: {role}"
+                            role = {"name": f"Include role: {role}"}
                             activitys.append(self.parse_task(role))
 
                 # parse tasks
