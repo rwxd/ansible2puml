@@ -80,7 +80,7 @@ class ansible2puml(object):
         elif "when" in task and not "block" in task:
             return self.parse_when(task=task)
         elif "name" in task:
-            return self.parse_normal_task
+            return self.parse_normal_task(task=task)
         else:
             print(f"Cannot parse task, name is undefined")
             print(json.dumps(task, indent=2))
@@ -109,15 +109,16 @@ class ansible2puml(object):
                 array.append(item)
         return array
 
-    def generate_plantuml(self, taskArray):
+    def generate_plantuml(self, activities):
         """
         Generate a PlantUML File from a tasks array.
         """
 
         from .puml_templates import puml_template
+        from .puml_templates import skinparam_template
 
         rendered = Template(puml_template).render(
-            taskArray=self.parsed)
+            skinparam=skinparam_template, activities=activities)
 
         plantUML = plantuml.PlantUML(
             url="http://www.plantuml.com/plantuml/png/")

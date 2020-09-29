@@ -43,7 +43,7 @@ puml_template = """
 @startuml
 {{ skinparam }}
 
-{% for item in activitys -%}
+{% for item in activities -%}
     {{ item }}
 {% endfor -%}
 

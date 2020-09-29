@@ -1,5 +1,6 @@
 
 @startuml
+
 skinparam defaultTextAlignment center
 skinparam componentStyle uml2
 
@@ -23,26 +24,49 @@ skinparam activityDiamond {
     BorderColor        black
 }
 
+
+
 :Create a resource group;
-    :Create the lab;
-    :Set the lab policies;
-    :Set the lab schedule;
-    :Create the lab virtual network;
-    :Define the lab artifacts source;
-    
-        if (github_token | length > 0) then (True)
-            :Set Facts;
-        endif
-    
-        if (github_token | length == 0) then (True)
-            :Set Facts;
-        endif
-    :Create a VM within the lab;
-    :List the artifact sources;
-    :List the artifact facts;
-    :List the Azure Resource Manager template facts;
-    :Get Azure Resource Manager template facts;
-    :Create the lab environment;
-    :Create the lab image;
-    :Delete the lab;
-    @enduml
+
+:Create the lab;
+
+:Set the lab policies;
+
+:Set the lab schedule;
+
+:Create the lab virtual network;
+
+:Define the lab artifacts source;
+
+if(github_token | length > 0) then (True)
+    :Set Facts;
+endif
+
+if(github_token | length == 0) then (True)
+    :Set Facts;
+endif
+
+:Create a VM within the lab;
+
+:List the artifact sources;
+
+:Debug output;
+
+:List the artifact facts;
+
+:Debug output;
+
+:List the Azure Resource Manager template facts;
+
+:Debug output;
+
+:Get Azure Resource Manager template facts;
+
+:Debug output;
+
+:Create the lab environment;
+
+:Create the lab image;
+
+:Delete the lab;
+@enduml

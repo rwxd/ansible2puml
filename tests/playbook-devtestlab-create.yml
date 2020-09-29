@@ -105,7 +105,9 @@
         resource_group: "{{ resource_group }}"
         lab_name: "{{ lab_name }}"
       register: output
-    - debug:
+      
+    - name: Debug output
+      debug:
         var: output
 
     - name: List the artifact facts
@@ -114,7 +116,9 @@
         lab_name: "{{ lab_name }}"
         artifact_source_name: public repo
       register: output
-    - debug:
+    
+    - name: Debug output
+      debug:
         var: output
 
     - name: List the Azure Resource Manager template facts
@@ -123,7 +127,9 @@
         lab_name: "{{ lab_name }}"
         artifact_source_name: "public environment repo"
       register: output
-    - debug:
+
+    - name: Debug output
+      debug:
         var: output
 
     - name: Get Azure Resource Manager template facts
@@ -133,7 +139,9 @@
         artifact_source_name: "public environment repo"
         name: ServiceFabric-LabCluster
       register: output
-    - debug:
+
+    - name: Debug output
+      debug:
         var: output
 
     - name: Create the lab environment
