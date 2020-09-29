@@ -127,4 +127,4 @@ class ansible2puml(object):
         with open(self.destination, "w") as f:
             f.write(rendered)
 
-        print(f"PNG: {url}")
+        print(url)
