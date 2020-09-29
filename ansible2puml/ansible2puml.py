@@ -84,6 +84,8 @@ class ansible2puml(object):
         else:
             print(f"Cannot parse task, name is undefined")
             print(json.dumps(task, indent=2))
+            task["name"] = ""
+            return self.parse_normal_task(task=task)
 
     def parse_when(self, task):
         """
