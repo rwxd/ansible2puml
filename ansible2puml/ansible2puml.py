@@ -98,10 +98,10 @@ class ansible2puml(object):
         Method to parse an block
         """
 
-        if "when" in block:
-            returnDict["has_when": True]
-        if "name" not in block:
-            returnDict["name"] = "undefined block name"
+        # if "when" in block:
+        #     returnDict["has_when": True]
+        # if "name" not in block:
+        #     returnDict["name"] = "undefined block name"
 
         array = []
         for item in block:
