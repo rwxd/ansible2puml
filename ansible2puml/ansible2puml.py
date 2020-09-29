@@ -14,11 +14,13 @@ class ansible2puml(object):
 
         # determine if path is a single file or a folder
         if os.path.isfile(self.source):
+            # single file
             self.parseAnsibleFile(self.source)
         elif os.path.isdir(source):
+            # directory
             print("Directory")
 
-        self.generatePlantUML(self.parsed)
+        self.generate_plantuml(self.parsed)
 
     def parseAnsibleFile(self, filePath):
         """
@@ -26,65 +28,93 @@ class ansible2puml(object):
         """
         with open(filePath, "r") as f:
             ansible_file = yaml.load(f, Loader=yaml.FullLoader)
-            print(f"Filename: {f.name}")
+            # print(f"Filename: {f.name}")
             # print(f"Parsed: {json.dumps(ansible_file, indent=2)}")
 
-        tasks = []
+        activitys = []
 
         for item in ansible_file:
-            # if there is a key "tasks" it is a playbook
-            if item["tasks"]:
-                # if name in playbook
+            # if there is a key "tasks" or roles it is a playbook
+            if "tasks" or "roles" in item:
+               # parse playbook name
                 if "name" in item:
-                    item["bold"] = True
-                    tasks.append(item)
+                    activitys.append(self.parse_task({"name": item["name"]}))
 
-                # if roles defined
+                # parse roles
                 if "roles" in item:
                     for role in item["roles"]:
-                        tasks.append({"name": f"Include role: {role}"})
+                        if "name" in role:
+                            activitys.append(self.parse_task(role))
+                        else:
+                            role["name"] = f"Include role: {role}"
+                            activitys.append(self.parse_task(role))
 
-                for task in item["tasks"]:
-                    if "name" in task:
-                        tasks.append(task)
-
-                    # if task is a block
-                    if "block" in task:
-                        for returnedTask in self.parseBlock(block=task["block"]):
-                            tasks.append(returnedTask)
+                # parse tasks
+                if "tasks" in item:
+                    # parse tasks
+                    for task in item["tasks"]:
+                        activitys.append(self.parse_task(task))
 
             # parse tasks file
             else:
                 for task in item:
-                    if "name" in task:
-                        tasks.append(task)
+                    activitys.append(self.parse_task(task))
 
-        self.parsed = tasks
+        self.parsed = activitys
+        return activitys
 
-    def parseWhen(self, task):
+    def parse_normal_task(self, task):
+        from .puml_templates import task_template
+        rendered = Template(task_template).render(task=task)
+        return rendered
+
+    def parse_task_bold(self, task):
+        from .puml_templates import task_bold_template
+        rendered = Template(task_bold_template).render(task=task)
+        return rendered
+
+    def parse_task(self, task):
+        # parse different tasks
+        if "block" in task:
+            return self.parse_block(block=task)
+        elif "when" in task and not "block" in task:
+            return self.parse_when(task=task)
+        elif "name" in task:
+            return self.parse_normal_task
+        else:
+            print(f"Cannot parse task, name is undefined")
+            print(json.dumps(task, indent=2))
+
+    def parse_when(self, task):
         """
         Method to parse a task with a when statement.
         """
-        returnDict = {}
-        if task["when"]:
-            returnDict["when": task["when"]]
+        from .puml_templates import when_template
+        rendered = Template(when_template).render(task=task)
+        return rendered
 
-    def parseBlock(self, block):
+    def parse_block(self, block):
         """
-        Method to parse an block.
+        Method to parse an block
         """
+
+        if "when" in block:
+            returnDict["has_when": True]
+        if "name" not in block:
+            returnDict["name"] = "undefined block name"
+
         array = []
         for item in block:
             if "name" in item:
                 array.append(item)
         return array
 
-    def generatePlantUML(self, taskArray):
+    def generate_plantuml(self, taskArray):
         """
         Generate a PlantUML File from a tasks array.
         """
 
-        from .puml_template import puml_template
+        from .puml_templates import puml_template
 
         rendered = Template(puml_template).render(
             taskArray=self.parsed)
