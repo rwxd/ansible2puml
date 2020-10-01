@@ -3,8 +3,7 @@
 ![tests](https://github.com/ProfileID/ansible2puml/workflows/tests/badge.svg)
 [![PyPI package](https://img.shields.io/pypi/v/ansible2puml)](https://pypi.python.org/pypi/ansible2puml/)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/ansible2puml.svg)](https://pypi.python.org/pypi/ansible2puml/)
-[![PyPI license](https://img.shields.io/pypi/l/ansible2puml.svg)](https://pypi.python.org/pypi/ansible2puml/)
-[![HitCount](http://hits.dwyl.com/profileid/ansible2puml.svg)](http://hits.dwyl.com/profileid/ansible2puml)
+<!-- [![PyPI license](https://img.shields.io/pypi/l/ansible2puml.svg)](https://pypi.python.org/pypi/ansible2puml/) -->
 
 ## About ansible2puml
 Create an PlantUML activity diagram from playbooks and roles trough python.

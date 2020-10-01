@@ -26,6 +26,8 @@ skinparam activityDiamond {
 
 
 
+:Include role: azure.azure_preview_modules;
+
 :Create a resource group;
 
 :Create the lab;
