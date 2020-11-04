@@ -5,15 +5,15 @@
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/ansible2puml.svg)](https://pypi.python.org/pypi/ansible2puml/)
 <!-- [![PyPI license](https://img.shields.io/pypi/l/ansible2puml.svg)](https://pypi.python.org/pypi/ansible2puml/) -->
 
-## About ansible2puml
+## `About ansible2puml`
 Create an PlantUML activity diagram from playbooks and roles trough python.
 
 A .puml file with the PlantUML syntax is generated and a link to display the diagram as PNG is generated.
 
-## Requirements
+## `Requirements`
 Python version >3.6
 
-## Install package
+## `Install package`
 Install via pypi
 ```bash
 pip install ansible2puml
@@ -24,12 +24,12 @@ Install via git
 pip install git+https://github.com/ProfileID/ansible2puml
 ```
 
-## How to
-### Playbook
+## `How to`
+### `Playbook`
 ```
 ansible2puml --source play.yml --destination play.puml 
 ```
 
-## Example
+## `Example`
 [![Example](./example/example-diagram.png)](./example/example-playbook.yml)  
 **Source: [example-playbook.yml](./example/example-playbook.yml)**
