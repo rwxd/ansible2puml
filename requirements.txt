@@ -1,5 +1,6 @@
-click
+typer
 pyyaml
 jinja2
 plantuml
 six
+ansible

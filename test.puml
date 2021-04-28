@@ -25,15 +25,4 @@ skinparam activityDiamond {
 }
 
 
-
-:Test Playbook;
-
-:check for samba version;
-:Block;
-
-:check for samba3x version;
-:Block;
-
-:check for samba4 version;
-:Block;
 @enduml
