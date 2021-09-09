@@ -1,3 +1,6 @@
+## !!! It's pretty crappy, I wouldn't use it in this condition. Someday I'll rebuild the whole thing :) !!!
+
+
 # ansible2puml
 
 ![tests](https://github.com/ProfileID/ansible2puml/workflows/tests/badge.svg)
