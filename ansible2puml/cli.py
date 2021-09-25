@@ -6,10 +6,10 @@ app = typer.Typer()
 
 
 @app.command()
-def playbook(source: str, destination: str):
+def playbook(source: str, destination: str) -> None:
     export_playbook(source, destination)
 
 
 @app.command()
-def role(source: str, destination: str):
+def role(source: str, destination: str) -> None:
     export_role(source, destination)
