@@ -1,10 +1,15 @@
-import click
-import os
-from .ansible2puml import ansible2puml
+import typer
+from ansible2puml.playbook import export_playbook
+from ansible2puml.role import export_role
+
+app = typer.Typer()
 
 
-@click.command()
-@click.option("-s", "--source", help="Source playbook")
-@click.option("-d", "--destination", help="destination file e.g. activity.puml")
-def main(source, destination):
-    ansible2puml(source=source, destination=destination)
+@app.command()
+def playbook(source: str, destination: str):
+    export_playbook(source, destination)
+
+
+@app.command()
+def role(source: str, destination: str):
+    export_role(source, destination)

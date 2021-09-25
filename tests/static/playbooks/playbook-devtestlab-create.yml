@@ -1,7 +1,5 @@
 ---
 - hosts: localhost
-  roles:
-   - azure.azure_preview_modules
   vars:
     resource_group: "{{ resource_group_name }}"
     lab_name: myLab
@@ -105,7 +103,7 @@
         resource_group: "{{ resource_group }}"
         lab_name: "{{ lab_name }}"
       register: output
-      
+
     - name: Debug output
       debug:
         var: output
@@ -116,7 +114,7 @@
         lab_name: "{{ lab_name }}"
         artifact_source_name: public repo
       register: output
-    
+
     - name: Debug output
       debug:
         var: output
